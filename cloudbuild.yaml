@@ -66,7 +66,9 @@ steps:
       - --timeout=60
       - --service-account=${_RUNTIME_SA}
       # ^@^ troca o separador para '@' porque CORS_ALLOWED_ORIGINS tem vírgulas.
-      - --set-env-vars=^@^ENVIRONMENT=${_ENVIRONMENT}@GOOGLE_CLOUD_PROJECT=$PROJECT_ID@ALLOWED_HOSTS=*@CORS_ALLOWED_ORIGINS=${_CORS_ALLOWED_ORIGINS}@IAM_JWT_ISSUER=brikz-iam@CERC_AUTH_URL=${_CERC_AUTH_URL}@CERC_API_BASE_URL=${_CERC_API_BASE_URL}@WEB_CONCURRENCY=2
+      # KEYCLOAK_AP_*: aceita também os tokens do Keycloak (realm ap, client
+      # ap-console) durante a transição IAM → Keycloak — ver shared/jwt_auth.py.
+      - --set-env-vars=^@^ENVIRONMENT=${_ENVIRONMENT}@GOOGLE_CLOUD_PROJECT=$PROJECT_ID@ALLOWED_HOSTS=*@CORS_ALLOWED_ORIGINS=${_CORS_ALLOWED_ORIGINS}@IAM_JWT_ISSUER=brikz-iam@KEYCLOAK_AP_ISSUER=https://auth.brikz.ai/realms/ap@KEYCLOAK_AP_AUDIENCE=ap-console@CERC_AUTH_URL=${_CERC_AUTH_URL}@CERC_API_BASE_URL=${_CERC_API_BASE_URL}@WEB_CONCURRENCY=2
       # IAM_JWT_PUBLIC_KEY_BRIKZ_IAM é a chave do IAM real. IAM_JWT_PUBLIC_KEY é a
       # chave LOCAL de homolog (gerar_jwt.py): o jwt_auth só a aceita com
       # IAM_JWT_ACEITAR_CHAVE_HOMOLOG=true (ausente aqui = recusada, fail-closed;
