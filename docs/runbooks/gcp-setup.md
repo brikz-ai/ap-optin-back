@@ -79,6 +79,10 @@ cloudbuild.builds.builder) + serviceAccountUser sobre `optin-run@`.
       | gcloud secrets create DJANGO_SECRET_KEY --data-file=- --replication-policy=user-managed --locations=southamerica-east1
 
 Emitir token: `python scripts/gerar_jwt.py --chave keys/homolog/jwt_private.pem --financiador <cnpj> --horas 24`.
+
+> Desde o endurecimento do `jwt_auth` (PR seguranca/jwt-auth-endurecido), tokens desta chave
+> local só são aceitos com `IAM_JWT_ACEITAR_CHAVE_HOMOLOG=true` e `ENVIRONMENT` != `production`;
+> o token sai com `type=access` e `sub` (obrigatórios). O front real usa o IAM (`IAM_JWT_PUBLIC_KEY_BRIKZ_IAM`).
 Segredos por tenant (`TENANT_IDS`, `TENANT_<cnpj>_CONFIG`) ficam na seção 6 (Plan 03) — são lidos em runtime,
 não montados no deploy, então onboardar tenant não exige redeploy.
 
