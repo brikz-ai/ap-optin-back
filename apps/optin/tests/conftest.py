@@ -24,7 +24,7 @@ def rsa_keypair():
 @pytest.fixture(autouse=True)
 def _iam_jwt_env(monkeypatch, rsa_keypair):
     _, public_pem = rsa_keypair
-    monkeypatch.setenv("IAM_JWT_PUBLIC_KEY", public_pem)
+    monkeypatch.setenv("IAM_JWT_PUBLIC_KEY_BRIKZ_IAM", public_pem)
     monkeypatch.setenv("IAM_JWT_ISSUER", "brikz-iam")
 
 
@@ -34,7 +34,7 @@ def auth_headers(rsa_keypair):
     token = pyjwt.encode(
         {
             "exp": int(time.time()) + 300,
-            "iss": "brikz-iam",
+            "iss": "brikz-iam", "type": "access",
             "sub": "user-1",
             "financiador_id": "12345678000199",
         },

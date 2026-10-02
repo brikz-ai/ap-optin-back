@@ -134,6 +134,10 @@ Token de 24h para o tenant real (CERC homologação, `38138785000136`):
 python scripts/gerar_jwt.py --chave keys/homolog/jwt_private.pem --financiador 38138785000136
 ```
 
+> Desde o endurecimento do `jwt_auth` (PR seguranca/jwt-auth-endurecido), tokens desta chave
+> local só são aceitos com `IAM_JWT_ACEITAR_CHAVE_HOMOLOG=true` e `ENVIRONMENT` != `production`;
+> o token sai com `type=access` e `sub` (obrigatórios). O front real usa o IAM (`IAM_JWT_PUBLIC_KEY_BRIKZ_IAM`).
+
 Front local contra homolog (`ap-front/.env`):
 
 ```
